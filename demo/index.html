@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo · Sistem Operasional (data contoh)</title>
+<meta name="description" content="Demo interaktif sistem operasional untuk villa, restoran, dan studio: reservasi, housekeeping, absensi, inventaris, purchasing, dan laporan keuangan. Semua data adalah contoh.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f2f4f0;--surface:#fff;--ink:#101f1c;--ink2:#3b4b47;--muted:#788480;--pool:#0a7d70;--pool-soft:#d9ece8;--clay:#ad3f2b;--amber:#b5820f;--line:#d6dad2;--violet:#5a3ecf;
+--fd:"Bricolage Grotesque",system-ui,sans-serif;--fb:"Instrument Sans",system-ui,sans-serif;--fm:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}body{margin:0;background:#e9ebe6;font-family:var(--fb);color:var(--ink);font-size:15px;line-height:1.45}
+a{color:inherit}button{font:inherit;cursor:pointer}input,select,textarea{font:inherit}
+.top{background:#17151f;color:#eceaf3;font-size:.82rem;padding:8px 14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.top a{color:#a993ff;text-decoration:none}.top .r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.top select,.top button{background:#2a2740;color:#eceaf3;border:1px solid #3b3756;border-radius:8px;padding:5px 8px;font-size:.8rem}
+.app{max-width:640px;margin:14px auto 40px;background:var(--paper);min-height:calc(100vh - 80px);border-radius:22px;box-shadow:0 20px 50px -20px rgba(0,0,0,.35);overflow:hidden;border:1px solid var(--line)}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px}
+.hdr .who{font-size:.78rem;color:var(--muted)}.hdr .who b{color:var(--ink)}
+.judul{font-family:var(--fd);font-weight:700;letter-spacing:-.02em}
+.kode{font-family:var(--fm);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.68rem;color:var(--muted)}
+main{padding:0 16px 90px}
+.kartu{background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.tombol{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:0 16px;min-height:48px;font-weight:600;font-size:.95rem;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.tombol.utama{background:var(--pool);color:#fff;border-color:var(--pool)}.tombol.kecil{min-height:36px;padding:0 12px;font-size:.82rem;border-radius:10px}
+.tombol:disabled{opacity:.45;cursor:not-allowed}
+.chip{display:inline-block;border-radius:999px;padding:3px 9px;font-size:.72rem;font-weight:600}
+.c-pool{background:var(--pool-soft);color:var(--pool)}.c-clay{background:#f3dcd7;color:var(--clay)}.c-amber{background:#f6e9c8;color:var(--amber)}.c-line{background:var(--line);color:var(--ink2)}.c-violet{background:#e7e1ff;color:var(--violet)}
+.grid{display:grid;gap:10px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.tile{padding:12px 14px}.tile .n{font-family:var(--fd);font-size:1.5rem;font-weight:700;line-height:1.1}.tile .l{font-size:.72rem;color:var(--muted)}
+.menu a{display:flex;flex-direction:column;gap:6px;padding:14px;text-decoration:none}.menu a span:first-child{font-size:1.3rem}.menu b{font-size:.92rem}.menu small{color:var(--muted);font-size:.72rem}
+.list{display:flex;flex-direction:column;gap:8px}.row{padding:12px 14px;border-left:4px solid var(--line)}
+.row.ok{border-left-color:var(--pool)}.row.warn{border-left-color:var(--amber)}.row.bad{border-left-color:var(--clay)}
+.row .t{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.row b{font-size:.95rem}.row small{color:var(--muted);display:block;font-size:.78rem}
+.aksi{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.aksi button{border:0;border-radius:9px;padding:7px 11px;font-size:.78rem;font-weight:600;background:var(--line);color:var(--ink2)}
+.aksi button.p{background:var(--pool-soft);color:var(--pool)}.aksi button.c{background:#f3dcd7;color:var(--clay)}.aksi button.a{background:#f6e9c8;color:var(--amber)}
+.tabs{display:flex;gap:4px;background:#dfe3dc;border-radius:12px;padding:3px;margin:10px 0;overflow-x:auto}
+.tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:8px 10px;font-size:.82rem;font-weight:600;color:var(--ink2);white-space:nowrap}.tabs button.on{background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.08);color:var(--ink)}
+.in{width:100%;border:1px solid var(--line);border-radius:12px;padding:0 12px;min-height:46px;background:var(--surface)}
+label.f{display:block;font-size:.78rem;color:var(--muted);margin:10px 0 4px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:640px;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 0 10px;z-index:5}
+.nav a{text-decoration:none;font-size:.68rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 8px;border-radius:10px}.nav a span{font-size:1.15rem}.nav a.on{color:var(--pool);background:var(--pool-soft)}
+.sheet-bg{position:fixed;inset:0;background:rgba(16,31,28,.45);z-index:10;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--paper);width:100%;max-width:640px;max-height:90vh;overflow:auto;border-radius:20px 20px 0 0;padding:14px 16px 24px}
+.sheet h3{margin:0 0 10px;font-family:var(--fd)}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 14px;border-radius:12px;font-size:.85rem;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.72rem}.cal .d{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line)}
+.cal .d b{font-size:.85rem}.cal .d.lo{background:#e3f1ec}.cal .d.mid{background:#f6e9c8}.cal .d.full{background:#f3dcd7}.cal .h{text-align:center;color:var(--muted)}
+.bar{display:flex;align-items:flex-end;gap:6px;height:110px;margin-top:8px}.bar div{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.62rem;color:var(--muted)}
+.bar i{display:block;flex:1;min-width:6px;border-radius:5px 5px 0 0;background:var(--pool)}.bar i.e{background:var(--clay);opacity:.75}
+.chk{display:flex;gap:10px;align-items:center;padding:10px 12px}.chk input{width:22px;height:22px}
+.pl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.9rem}.pl.tot{font-weight:700;border-bottom:0;font-size:1rem}
+.muted{color:var(--muted)}.small{font-size:.78rem}.mt{margin-top:10px}.mb{margin-bottom:10px}
+.pill-room{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 8px;font-size:.72rem;background:#f6e9c8;color:var(--amber);font-weight:600}
+.banner{background:#e7e1ff;color:#3b2a8c;font-size:.78rem;padding:8px 12px;border-radius:12px;margin:0 0 10px}
+.wm{position:fixed;right:12px;bottom:72px;font-family:var(--fm);font-size:.6rem;color:#fff;background:rgba(23,21,31,.7);padding:3px 8px;border-radius:999px;z-index:4;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <div>🧪 <b>Demo</b> · data contoh, boleh diklik apa saja · <a href="../jasa/">← Kembali ke halaman jasa</a></div>
+  <div class="r">
+    <label>Login sebagai <select id="peran"></select></label>
+    <button id="reset">Reset data</button>
+  </div>
+</div>
+<div class="app">
+  <div class="hdr">
+    <div><div class="kode">Villa Contoh · Operasional</div><div class="who">Masuk sebagai <b id="whoName"></b> · <span id="whoRole"></span></div></div>
+    <span class="chip c-pool" id="jam"></span>
+  </div>
+  <main id="main"></main>
+  <nav class="nav" id="nav"></nav>
+</div>
+<div class="wm">DEMO · DATA CONTOH</div>
+<div class="toast" id="toast"></div>
+<div id="sheetHost"></div>
+
+<script>
+/* ───────── data contoh ───────── */
+const HARI = 86400000;
+const today = new Date(); today.setHours(0,0,0,0);
+const ymd = d => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const addD = (s, n) => ymd(new Date(new Date(s+"T00:00:00").getTime() + n*HARI));
+const rp = n => "Rp " + Math.round(n).toLocaleString("id-ID");
+const tgl = s => new Date(s+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+const now = () => new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+const uid = () => Math.random().toString(36).slice(2,8);
+
+const STAFF = [
+  {id:"faiz",nama:"Faiz",peran:"Manager",divisi:"Manajemen"},
+  {id:"wayan",nama:"Wayan",peran:"Supervisor",divisi:"Housekeeping"},
+  {id:"kadek",nama:"Kadek",peran:"Attendant",divisi:"Housekeeping"},
+  {id:"putu",nama:"Putu",peran:"Attendant",divisi:"Barista"},
+];
+const KAMAR = ["Room A","Room B","Room C","Room D","Room E","Room F","Room G","Room H"];
+const RATE = {harian:850000, mingguan:5000000, bulanan:15000000};
+const CHECKLIST = ["Buka jendela & ventilasi","Strip linen & ganti sprei","Bersihkan kamar mandi (foto)","Vacuum & pel lantai","Isi ulang amenities","Cek minibar & safe box","Foto akhir kamar (foto)"];
+
+function dataAwal(){
+  const t = ymd(today);
+  return {
+    reservasi: [
+      {id:uid(),tamu:"Sophie Martin",kamar:"Room A",cin:addD(t,-3),cout:addD(t,2),basis:"harian",total:5*RATE.harian,bayar:5*RATE.harian,status:"Checked-In",sumber:"Airbnb"},
+      {id:uid(),tamu:"Dimitri K.",kamar:"Room C",cin:addD(t,-20),cout:addD(t,10),basis:"bulanan",total:RATE.bulanan,bayar:10000000,status:"Checked-In",sumber:"Langsung"},
+      {id:uid(),tamu:"Hana Sato",kamar:"Room E",cin:t,cout:addD(t,7),basis:"mingguan",total:RATE.mingguan,bayar:1500000,status:"Confirmed",sumber:"Website"},
+      {id:uid(),tamu:"Liam O'Brien",kamar:"Room B",cin:addD(t,-1),cout:t,basis:"harian",total:RATE.harian,bayar:RATE.harian,status:"Checked-In",sumber:"Booking.com"},
+      {id:uid(),tamu:"Grace Lim",kamar:"Room G",cin:addD(t,3),cout:addD(t,6),basis:"harian",total:3*RATE.harian,bayar:0,status:"Pending Payment",sumber:"Website"},
+      {id:uid(),tamu:"Marco Rossi",kamar:"Room D",cin:addD(t,-9),cout:addD(t,-2),basis:"mingguan",total:RATE.mingguan,bayar:RATE.mingguan,status:"Checked-Out",sumber:"Agoda"},
+    ],
+    tugas: [
+      {id:uid(),judul:"Stayover Cleaning",kamar:"Room A",jenis:"Stayover",divisi:"Housekeeping",status:"Belum Mulai",petugas:"kadek",cek:[],catatan:""},
+      {id:uid(),judul:"Request Tamu",kamar:"Room C",jenis:"Request Tamu",divisi:"Housekeeping",status:"Belum Mulai",petugas:"",cek:[],catatan:"Diminta jam 10:30 – 12:30 · extra towels"},
+      {id:uid(),judul:"Opening Bar",kamar:"Bar",jenis:"Opening",divisi:"Barista",status:"Selesai",petugas:"putu",cek:CHECKLIST.map((_,i)=>i),catatan:""},
+    ],
+    absen: [
+      {staf:"wayan",masuk:"07:55",keluar:null,telat:0},
+      {staf:"putu",masuk:"08:12",keluar:null,telat:12},
+    ],
+    purchase: [
+      {id:uid(),nama:"Chemical floor cleaner 5 L",divisi:"Housekeeping",jumlah:2,satuan:"jerigen",harga:0,status:"Diajukan",pemohon:"kadek"},
+      {id:uid(),nama:"Oat milk 1 L",divisi:"Barista",jumlah:12,satuan:"pcs",harga:420000,status:"Dibeli",pemohon:"putu"},
+      {id:uid(),nama:"Lampu LED 9W",divisi:"Housekeeping",jumlah:6,satuan:"pcs",harga:150000,status:"Disetujui",pemohon:"wayan"},
+    ],
+    barang: [
+      {id:"sprei",nama:"Sprei",jenis:"Stok",satuan:"pcs",stok:14,min:10,lokasi:{}},
+      {id:"handuk",nama:"Handuk mandi",jenis:"Stok",satuan:"pcs",stok:9,min:15,lokasi:{}},
+      {id:"sabun",nama:"Sabun & shampoo",jenis:"Stok",satuan:"pcs",stok:40,min:20,lokasi:{}},
+      {id:"hair",nama:"Hairdryer",jenis:"Pinjam",satuan:"pcs",stok:1,min:1,lokasi:{"Room C":1}},
+      {id:"iron",nama:"Setrika + papan",jenis:"Pinjam",satuan:"set",stok:2,min:1,lokasi:{}},
+    ],
+    aset: ["Safe box ×1","Hanger ×10","Keranjang rotan ×3","Meja kerja ×1","Sofa ×1","Cushion ×2","Bantal ×4","Kursi balcony ×2"],
+    cekAset: {"Room A":{tgl:addD(t,-4),oleh:"Wayan",hasil:"Lengkap",ringkas:""},"Room D":{tgl:addD(t,-1),oleh:"Kadek",hasil:"Ada Kekurangan",ringkas:"Hanger 8/10; Cushion rusak 1"}},
+    mutasi: [{tgl:addD(t,-1),jenis:"Keluar",barang:"Hairdryer",jumlah:1,tujuan:"Room C",oleh:"Kadek"},{tgl:addD(t,-2),jenis:"Masuk",barang:"Sprei",jumlah:10,tujuan:"Pembelian",oleh:"Wayan"}],
+    pengeluaranLain: [{nama:"Listrik PLN",kat:"Utilities",nominal:3200000},{nama:"Gaji HK (2 orang)",kat:"Salary",nominal:7000000},{nama:"Laundry",kat:"Housekeeping",nominal:1250000}],
+    log: [],
+  };
+}
+let S = JSON.parse(localStorage.getItem("demo-ops") || "null") || dataAwal();
+let me = STAFF.find(s=>s.id===(localStorage.getItem("demo-me")||"faiz")) || STAFF[0];
+const save = () => localStorage.setItem("demo-ops", JSON.stringify(S));
+const isMgr = () => me.peran==="Manager";
+const isSpv = () => me.peran==="Supervisor";
+const staf = id => STAFF.find(s=>s.id===id);
+const toast = m => {const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("on"),2600);};
+const catat = m => {S.log.unshift({w:now(),oleh:me.nama,m}); S.log=S.log.slice(0,30);};
+
+/* ───────── router ───────── */
+const ROUTES = {
+  beranda:{ik:"🏠",l:"Beranda",boleh:()=>true},
+  reservasi:{ik:"🗓️",l:"Reservasi",boleh:()=>isMgr()||isSpv()},
+  tugas:{ik:"✅",l:"Tugas",boleh:()=>true},
+  absen:{ik:"📍",l:"Absensi",boleh:()=>true},
+  inventaris:{ik:"📦",l:"Inventaris",boleh:()=>me.divisi==="Housekeeping"||isMgr()},
+  purchase:{ik:"🛒",l:"Purchase",boleh:()=>true},
+  finance:{ik:"💰",l:"Finance",boleh:()=>isMgr()},
+};
+function go(r){ location.hash = r; }
+function route(){ const r = (location.hash||"#beranda").slice(1); return ROUTES[r] && ROUTES[r].boleh() ? r : "beranda"; }
+window.addEventListener("hashchange", ()=>{tutup();render();});
+
+/* ───────── sheet (bottom modal) ───────── */
+function sheet(judul, html, onMount){
+  const h = document.getElementById("sheetHost");
+  h.innerHTML = `<div class="sheet-bg" id="sbg"><div class="sheet" onclick="event.stopPropagation()"><div style="display:flex;justify-content:space-between;align-items:center"><h3>${judul}</h3><button class="tombol kecil" onclick="tutup()">✕</button></div>${html}</div></div>`;
+  document.getElementById("sbg").onclick = tutup;
+  onMount && onMount();
+}
+function tutup(){ document.getElementById("sheetHost").innerHTML=""; }
+window.tutup = tutup;
+
+/* ───────── helpers domain ───────── */
+function malam(a,b){ return Math.round((new Date(b)-new Date(a))/HARI); }
+function hitungHarga(n, basis){
+  if(basis==="harian") return n*RATE.harian;
+  const p = basis==="mingguan"?7:30, r = basis==="mingguan"?RATE.mingguan:RATE.bulanan;
+  return Math.floor(n/p)*r + (n%p)*RATE.harian; // periode penuh + sisa hari harian
+}
+function bentrok(kamar, cin, cout, kecualiId){
+  return S.reservasi.some(r => r.kamar===kamar && r.id!==kecualiId && ["Confirmed","Checked-In","Pending Payment"].includes(r.status) && cin < r.cout && cout > r.cin);
+}
+function terisiTanggal(d){ return S.reservasi.filter(r=>["Confirmed","Checked-In"].includes(r.status) && r.cin<=d && d<r.cout).length; }
+function statusKamar(k){
+  const r = S.reservasi.find(r=>r.kamar===k && r.status==="Checked-In"); if(r) return "Ditempati";
+  if(S.tugas.some(t=>t.kamar===k && t.jenis==="Check-Out" && t.status!=="Selesai")) return "Cleaning";
+  return "Tersedia";
+}
+function stokRendah(b){ return b.jenis!=="Aset Kamar" && b.stok<=b.min; }
+function chipStatus(s){
+  const m={"Checked-In":"c-pool","Confirmed":"c-violet","Pending Payment":"c-amber","Checked-Out":"c-line","Cancelled":"c-clay","Belum Mulai":"c-line","Dikerjakan":"c-amber","Menunggu Inspeksi":"c-violet","Selesai":"c-pool","Perlu Ulang":"c-clay","Diajukan":"c-amber","Disetujui":"c-violet","Dibeli":"c-pool","Ditolak":"c-clay","Lengkap":"c-pool","Ada Kekurangan":"c-clay","Ditempati":"c-pool","Cleaning":"c-amber","Tersedia":"c-line"};
+  return `<span class="chip ${m[s]||"c-line"}">${s}</span>`;
+}
+
+/* ───────── views ───────── */
+const V = {};
+
+V.beranda = () => {
+  const t = ymd(today);
+  const terisi = terisiTanggal(t), open = S.tugas.filter(x=>x.status!=="Selesai").length;
+  const rendah = S.barang.filter(stokRendah).length;
+  const masukCash = S.reservasi.reduce((a,r)=>a+r.bayar,0);
+  const hutang = S.reservasi.filter(r=>r.status!=="Cancelled"&&r.status!=="Pending Payment").reduce((a,r)=>a+Math.max(0,r.total-r.bayar),0);
+  const menu = Object.keys(ROUTES).filter(k=>k!=="beranda"&&ROUTES[k].boleh());
+  const sub = {reservasi:"Kalender, check-in/out, bayar",tugas:"Checklist + foto wajib",absen:"Selfie + lokasi",inventaris:"Stok, by-request, aset kamar",purchase:"Ajukan → setujui → beli",finance:"P&L & hutang tamu"};
+  return `
+  <div class="banner">Ini demo dengan data contoh. Ganti <b>Login sebagai</b> di atas untuk melihat tampilan Manager / Supervisor / Attendant. Sistem aslinya dua bahasa (ID/EN) dan bisa dipasang di layar HP.</div>
+  <h1 class="judul" style="font-size:1.4rem;margin:4px 0 10px">Selamat ${new Date().getHours()<11?"pagi":new Date().getHours()<15?"siang":"sore"}, ${me.nama} 👋</h1>
+  <div class="grid g3 mb">
+    <div class="kartu tile"><div class="n">${terisi}<span class="muted" style="font-size:.9rem">/${KAMAR.length}</span></div><div class="l">kamar terisi hari ini</div></div>
+    <div class="kartu tile"><div class="n" style="color:${open?'var(--amber)':'var(--pool)'}">${open}</div><div class="l">tugas belum selesai</div></div>
+    <div class="kartu tile"><div class="n" style="color:${rendah?'var(--clay)':'var(--pool)'}">${rendah}</div><div class="l">stok rendah</div></div>
+  </div>
+  ${isMgr()?`<div class="grid g2 mb"><div class="kartu tile"><div class="n" style="font-size:1.1rem">${rp(masukCash)}</div><div class="l">uang masuk booking (cash basis)</div></div><div class="kartu tile"><div class="n" style="font-size:1.1rem;color:var(--clay)">${rp(hutang)}</div><div class="l">sisa tagihan tamu</div></div></div>`:""}
+  <div class="kode mb">Menu</div>
+  <div class="grid g2 menu">${menu.map(k=>`<a class="kartu" href="#${k}"><span>${ROUTES[k].ik}</span><b>${ROUTES[k].l}</b><small>${sub[k]}</small></a>`).join("")}</div>
+  <div class="kode mt mb" style="margin-top:16px">Status kamar</div>
+  <div class="kartu" style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px">${KAMAR.map(k=>`<span>${chipStatus(statusKamar(k)).replace('">','">'+k+' · ')}</span>`).join("")}</div>
+  ${S.log.length?`<div class="kode mt mb" style="margin-top:16px">Aktivitas terakhir (jejak siapa–kapan)</div><div class="kartu" style="padding:6px 12px">${S.log.slice(0,6).map(l=>`<div class="small" style="padding:5px 0;border-bottom:1px dashed var(--line)"><span class="muted">${l.w}</span> · <b>${l.oleh}</b> ${l.m}</div>`).join("")}</div>`:""}`;
+};
+
+/* Reservasi */
+let tabRes = "list";
+V.reservasi = () => {
+  const t = ymd(today);
+  const list = S.reservasi.slice().sort((a,b)=>a.cin.localeCompare(b.cin));
+  const first = new Date(today.getFullYear(), today.getMonth(), 1);
+  const days = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
+  const pad = (first.getDay()+6)%7;
+  let cal = ["Sen","Sel","Rab","Kam","Jum","Sab","Min"].map(h=>`<div class="h">${h}</div>`).join("") + "<div></div>".repeat(pad);
+  for(let d=1; d<=days; d++){ const s=ymd(new Date(today.getFullYear(),today.getMonth(),d)); const n=terisiTanggal(s); const k=n===0?"":n<KAMAR.length*0.7?"lo":n<KAMAR.length?"mid":"full"; cal+=`<div class="d ${k}" title="${n}/${KAMAR.length} terisi"><b>${d}</b><span>${n}/${KAMAR.length}</span></div>`; }
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:center"><h1 class="judul" style="font-size:1.3rem;margin:0">Reservasi</h1><button class="tombol kecil utama" onclick="formReservasi()">+ Reservasi baru</button></div>
+  <div class="tabs"><button class="${tabRes==='list'?'on':''}" onclick="tabRes='list';render()">Daftar</button><button class="${tabRes==='kal'?'on':''}" onclick="tabRes='kal';render()">Kalender</button></div>
+  ${tabRes==="kal" ? `<div class="kartu" style="padding:12px"><div class="kode mb">${today.toLocaleDateString("id-ID",{month:"long",year:"numeric"})}</div><div class="cal">${cal}</div><p class="small muted mt">Hijau = lega, kuning = hampir penuh, merah = penuh. Di sistem asli, ketuk tanggal untuk lihat kamar kosong & tamu.</p></div>` :
+  `<div class="list">${list.map(r=>{
+    const sisa = r.total - r.bayar;
+    const kelas = r.status==="Checked-In"?"ok":r.status==="Pending Payment"?"warn":sisa>0&&r.status!=="Cancelled"?"bad":"";
+    const aksi = [];
+    if(r.status==="Confirmed") aksi.push(`<button class="p" onclick="aksiRes('${r.id}','checkin')">Check-in (QR tamu)</button>`);
+    if(r.status==="Checked-In") aksi.push(`<button class="c" onclick="aksiRes('${r.id}','checkout')">Check-out</button>`,`<button onclick="aksiRes('${r.id}','extend')">Extend +1 malam</button>`);
+    if(r.status==="Pending Payment") aksi.push(`<button class="p" onclick="aksiRes('${r.id}','konfirmasi')">Konfirmasi bayar</button>`,`<button class="c" onclick="aksiRes('${r.id}','batal')">Batalkan</button>`);
+    if(sisa>0 && ["Confirmed","Checked-In","Checked-Out"].includes(r.status)) aksi.push(`<button class="a" onclick="aksiRes('${r.id}','bayar')">Catat pembayaran</button>`);
+    return `<div class="kartu row ${kelas}"><div class="t"><div><b>${r.tamu}</b><small>${r.kamar} · ${tgl(r.cin)} → ${tgl(r.cout)} · ${malam(r.cin,r.cout)} malam · ${r.basis} · ${r.sumber}</small></div>${chipStatus(r.status)}</div>
+      <div class="small mt" style="margin-top:6px">Total <b>${rp(r.total)}</b> · dibayar ${rp(r.bayar)} ${sisa>0?`· <b style="color:var(--clay)">sisa ${rp(sisa)}</b>`:'· <span style="color:var(--pool)">lunas</span>'}</div>
+      ${aksi.length?`<div class="aksi">${aksi.join("")}</div>`:""}</div>`;}).join("")}</div>`}`;
+};
+window.formReservasi = () => {
+  const t = ymd(today);
+  sheet("Reservasi baru", `
+    <label class="f">Nama tamu</label><input class="in" id="fNama" placeholder="Nama tamu">
+    <label class="f">Kamar</label><select class="in" id="fKamar">${KAMAR.map(k=>`<option>${k}</option>`).join("")}</select>
+    <div class="grid g2"><div><label class="f">Check-in</label><input class="in" type="date" id="fCin" value="${t}"></div><div><label class="f">Jumlah malam</label><input class="in" type="number" id="fMalam" value="2" min="1"></div></div>
+    <label class="f">Basis tarif</label><select class="in" id="fBasis"><option value="harian">Harian · ${rp(RATE.harian)}</option><option value="mingguan">Mingguan · ${rp(RATE.mingguan)}</option><option value="bulanan">Bulanan · ${rp(RATE.bulanan)}</option></select>
+    <div class="kartu mt" style="padding:10px 12px" id="fPreview"></div>
+    <button class="tombol utama mt" style="width:100%" onclick="simpanReservasi()">Simpan reservasi</button>`,
+    () => { const upd=()=>{const n=+document.getElementById("fMalam").value||0,b=document.getElementById("fBasis").value,k=document.getElementById("fKamar").value,c=document.getElementById("fCin").value;const co=addD(c,n);const bt=bentrok(k,c,co);document.getElementById("fPreview").innerHTML=`<div class="small muted">Check-out ${tgl(co)} · subtotal otomatis (periode penuh + sisa hari harian)</div><div class="judul" style="font-size:1.2rem">${rp(hitungHarga(n,b))}</div>${bt?`<div class="small" style="color:var(--clay)">⚠ ${k} sudah terisi di tanggal itu — anti double-booking</div>`:`<div class="small" style="color:var(--pool)">✓ ${k} kosong</div>`}`;};
+      ["fMalam","fBasis","fKamar","fCin"].forEach(id=>document.getElementById(id).addEventListener("input",upd)); upd(); });
+};
+window.simpanReservasi = () => {
+  const nama=document.getElementById("fNama").value.trim()||"Tamu Baru",k=document.getElementById("fKamar").value,c=document.getElementById("fCin").value,n=+document.getElementById("fMalam").value||1,b=document.getElementById("fBasis").value;
+  const co=addD(c,n); if(bentrok(k,c,co)) return toast("Ditolak: kamar sudah terisi di tanggal itu.");
+  S.reservasi.push({id:uid(),tamu:nama,kamar:k,cin:c,cout:co,basis:b,total:hitungHarga(n,b),bayar:0,status:"Confirmed",sumber:"Langsung"});
+  catat(`membuat reservasi ${nama} · ${k}`); save(); tutup(); toast("Reservasi tersimpan. Link check-in QR siap dikirim ke tamu."); render();
+};
+window.aksiRes = (id, a) => {
+  const r = S.reservasi.find(x=>x.id===id); if(!r) return;
+  if(a==="checkin"){ r.status="Checked-In"; catat(`check-in ${r.tamu} (${r.kamar})`); toast("Tamu Checked-In. Kamar jadi Ditempati."); }
+  if(a==="checkout"){ r.status="Checked-Out"; S.tugas.unshift({id:uid(),judul:"Check-Out Cleaning",kamar:r.kamar,jenis:"Check-Out",divisi:"Housekeeping",status:"Belum Mulai",petugas:"",cek:[],catatan:"Otomatis dari check-out"}); catat(`check-out ${r.tamu}; tugas cleaning ${r.kamar} dibuat otomatis`); toast("Checked-Out → tugas Check-Out Cleaning otomatis muncul di Housekeeping."); }
+  if(a==="extend"){ r.cout=addD(r.cout,1); r.total+=RATE.harian; catat(`extend ${r.tamu} +1 malam`); toast("Diperpanjang 1 malam, tagihan bertambah "+rp(RATE.harian)); }
+  if(a==="konfirmasi"){ r.status="Confirmed"; r.bayar=Math.round(r.total*0.3); catat(`konfirmasi DP ${r.tamu}`); toast("DP 30% dikonfirmasi, status Confirmed."); }
+  if(a==="batal"){ r.status="Cancelled"; catat(`membatalkan ${r.tamu}`); toast("Dibatalkan, kamar kembali tersedia."); }
+  if(a==="bayar"){ const sisa=r.total-r.bayar; const v=prompt(`Catat pembayaran ${r.tamu}. Sisa ${rp(sisa)}. Nominal:`, sisa); const n=+String(v||"").replace(/\D/g,""); if(!n) return; r.bayar=Math.min(r.total,r.bayar+n); catat(`mencatat pembayaran ${rp(n)} dari ${r.tamu}`); toast("Pembayaran tercatat per tanggal hari ini (cash basis)."); }
+  save(); render();
+};
+
+/* Tugas */
+V.tugas = () => {
+  let list = S.tugas.slice();
+  if(!isMgr()) list = list.filter(t=>t.divisi===me.divisi);
+  if(me.peran==="Attendant") list = list.filter(t=>!t.petugas || t.petugas===me.id);
+  const grp = s => list.filter(t=>t.status===s);
+  const kartu = t => { const kelas=t.status==="Selesai"?"ok":t.status==="Menunggu Inspeksi"?"warn":t.status==="Perlu Ulang"?"bad":"";
+    const aksi=[];
+    if(me.peran==="Attendant" && !t.petugas && t.divisi===me.divisi) aksi.push(`<button class="p" onclick="ambil('${t.id}')">Ambil tugas ini</button>`);
+    if((t.petugas===me.id||isSpv()&&t.divisi===me.divisi) && ["Belum Mulai","Dikerjakan","Perlu Ulang"].includes(t.status)) aksi.push(`<button class="a" onclick="kerjakan('${t.id}')">Kerjakan checklist</button>`);
+    if((isSpv()&&t.divisi===me.divisi||isMgr()) && t.status==="Menunggu Inspeksi") aksi.push(`<button class="p" onclick="inspeksi('${t.id}',true)">Luluskan</button>`,`<button class="c" onclick="inspeksi('${t.id}',false)">Perlu ulang</button>`);
+    return `<div class="kartu row ${kelas}"><div class="t"><div><b>${t.kamar} · ${t.judul}</b><small>${t.divisi} · ${t.petugas?"oleh "+staf(t.petugas).nama:"<span style='color:var(--amber)'>belum diambil</span>"} · ${t.cek.length}/${CHECKLIST.length} item</small>${t.catatan?`<small style="color:var(--amber)">${t.catatan}</small>`:""}</div>${chipStatus(t.status)}</div>${aksi.length?`<div class="aksi">${aksi.join("")}</div>`:""}</div>`; };
+  return `<h1 class="judul" style="font-size:1.3rem;margin:0 0 10px">Tugas ${isMgr()?"semua divisi":me.divisi}</h1>
+  ${["Belum Mulai","Dikerjakan","Perlu Ulang","Menunggu Inspeksi","Selesai"].map(s=>grp(s).length?`<div class="kode mb" style="margin-top:12px">${s} (${grp(s).length})</div><div class="list">${grp(s).map(kartu).join("")}</div>`:"").join("")}
+  ${!list.length?`<p class="kartu muted" style="padding:24px;text-align:center">Tidak ada tugas.</p>`:""}
+  <p class="small muted mt">Attendant hanya melihat tugas miliknya & tugas terbuka di divisinya. Supervisor menginspeksi. Manager memantau semua. Foto wajib disimulasikan dengan tombol.</p>`;
+};
+window.ambil = id => { const t=S.tugas.find(x=>x.id===id); t.petugas=me.id; catat(`mengambil tugas ${t.kamar} ${t.judul}`); save(); toast("Tugas jadi milikmu — tercatat siapa yang mengerjakan."); render(); };
+window.kerjakan = id => {
+  const t=S.tugas.find(x=>x.id===id); if(t.status==="Belum Mulai"||t.status==="Perlu Ulang"){t.status="Dikerjakan";save();}
+  sheet(`${t.kamar} · ${t.judul}`, `<div class="list">${CHECKLIST.map((c,i)=>`<label class="kartu chk"><input type="checkbox" ${t.cek.includes(i)?"checked":""} onchange="cekItem('${t.id}',${i},this.checked)"><span>${c.replace("(foto)","")}${c.includes("(foto)")?`<br><button class="tombol kecil" style="margin-top:4px" onclick="event.preventDefault();toast('📷 Kamera dibuka — di sistem asli foto wajib diambil langsung dari kamera, tidak bisa dari galeri.')">📷 Ambil foto (wajib)</button>`:""}</span></label>`).join("")}</div>
+    <button class="tombol utama mt" style="width:100%" onclick="selesaiTugas('${t.id}')">Kirim untuk inspeksi</button>`);
+};
+window.cekItem = (id,i,on) => { const t=S.tugas.find(x=>x.id===id); t.cek = on ? Array.from(new Set([...t.cek,i])) : t.cek.filter(x=>x!==i); save(); };
+window.selesaiTugas = id => { const t=S.tugas.find(x=>x.id===id); if(t.cek.length<CHECKLIST.length) return toast(`Masih ${CHECKLIST.length-t.cek.length} item belum dicentang.`); t.status="Menunggu Inspeksi"; catat(`menyelesaikan ${t.kamar} ${t.judul}, menunggu inspeksi`); save(); tutup(); toast("Terkirim. Supervisor dapat notifikasi untuk inspeksi."); render(); };
+window.inspeksi = (id,ok) => { const t=S.tugas.find(x=>x.id===id); if(ok){t.status="Selesai"; catat(`meluluskan ${t.kamar} ${t.judul}`); toast(t.jenis==="Check-Out"?`Lulus. ${t.kamar} otomatis kembali Tersedia.`:"Lulus inspeksi.");} else {t.status="Perlu Ulang"; t.cek=[]; catat(`minta ulang ${t.kamar} ${t.judul}`); toast("Dikembalikan ke petugas.");} save(); render(); };
+
+/* Absensi */
+V.absen = () => {
+  const a = S.absen.find(x=>x.staf===me.id);
+  const jadwal = me.divisi==="Housekeeping"?"Pagi 08:00–16:00":me.divisi==="Barista"?"Opening 07:30–15:30":"—";
+  return `<h1 class="judul" style="font-size:1.3rem;margin:0 0 10px">Absensi</h1>
+  <div class="kartu" style="padding:14px">
+    <div class="kode">Jadwal hari ini</div><div><b>${jadwal}</b> <span class="small muted">· geofence 30 m dari properti</span></div>
+    <div class="mt">${!a?`<button class="tombol utama" style="width:100%" onclick="absen('masuk')">📷 Absen Masuk (selfie + lokasi)</button>`:!a.keluar?`<div class="chip c-pool">Masuk ${a.masuk}${a.telat?` · <span style='color:var(--clay)'>telat ${a.telat} mnt</span>`:" · tepat waktu"}</div><button class="tombol mt" style="width:100%" onclick="absen('keluar')">Absen Keluar</button>`:`<div class="chip c-line">Masuk ${a.masuk} · Keluar ${a.keluar}</div><p class="small muted mt">Shift hari ini selesai.</p>`}</div>
+  </div>
+  <div class="kode mt mb" style="margin-top:16px">Hari ini (${isMgr()?"semua staff":"divisi "+me.divisi})</div>
+  <div class="list">${STAFF.filter(s=>s.peran!=="Manager"&&(isMgr()||s.divisi===me.divisi)).map(s=>{const x=S.absen.find(y=>y.staf===s.id);return `<div class="kartu row ${x?(x.telat?"warn":"ok"):""}"><div class="t"><div><b>${s.nama}</b><small>${s.divisi} · ${s.peran}</small></div>${x?`<span class="small">${x.masuk} → ${x.keluar||"<span style='color:var(--pool)'>bekerja</span>"}${x.telat?`<br><span class="chip c-clay">Telat ${x.telat} mnt</span>`:""}</span>`:`<span class="chip c-line">belum absen</span>`}</div></div>`;}).join("")}</div>
+  <p class="small muted mt">Di sistem asli: selfie dari kamera depan, koordinat GPS & jarak disimpan, shift malam lintas hari didukung, rekap bulanan jadi dasar slip gaji & potongan telat.</p>`;
+};
+window.absen = j => { if(me.peran==="Manager") return toast("Manager tidak wajib absen di demo ini."); const a=S.absen.find(x=>x.staf===me.id); const t=now(); if(j==="masuk"){const menit=new Date().getHours()*60+new Date().getMinutes(); const batas=me.divisi==="Barista"?7*60+30:8*60; const telat=Math.max(0,menit-batas-5); S.absen.push({staf:me.id,masuk:t,keluar:null,telat}); catat(`absen masuk ${t}${telat?` (telat ${telat} mnt)`:""}`); toast(telat?`Tercatat ${t} — terlambat ${telat} menit dari jadwal.`:`Tercatat ${t} — tepat waktu. Lokasi ✓ 12 m.`);} else {a.keluar=t; catat(`absen keluar ${t}`); toast("Absen keluar tercatat.");} save(); render(); };
+
+/* Inventaris */
+let tabInv="stok";
+V.inventaris = () => {
+  const stok=S.barang.filter(b=>b.jenis==="Stok"), pinjam=S.barang.filter(b=>b.jenis==="Pinjam");
+  const kelola = isMgr()||isSpv();
+  return `<h1 class="judul" style="font-size:1.3rem;margin:0 0 6px">Inventaris Housekeeping</h1>
+  <div class="tabs"><button class="${tabInv==='stok'?'on':''}" onclick="tabInv='stok';render()">Stok</button><button class="${tabInv==='pinjam'?'on':''}" onclick="tabInv='pinjam';render()">By Request</button><button class="${tabInv==='aset'?'on':''}" onclick="tabInv='aset';render()">Aset Kamar</button><button class="${tabInv==='riwayat'?'on':''}" onclick="tabInv='riwayat';render()">Riwayat</button></div>
+  ${tabInv==="stok"?`<div class="list">${stok.map(b=>`<div class="kartu row ${stokRendah(b)?'bad':'ok'}"><div class="t"><div><b>${b.nama}</b><small>minimum ${b.min} ${b.satuan}</small></div><div class="judul" style="font-size:1.3rem;color:${stokRendah(b)?'var(--clay)':'inherit'}">${b.stok} <span class="small muted" style="font-weight:400">${b.satuan}</span></div></div><div class="aksi"><button class="p" onclick="mutasi('${b.id}','Masuk')">+ Masuk</button><button class="c" onclick="mutasi('${b.id}','Keluar')">− Keluar</button>${kelola?`<button onclick="mutasi('${b.id}','Koreksi')">Koreksi</button>`:""}</div></div>`).join("")}</div>`:""}
+  ${tabInv==="pinjam"?`<p class="small muted mb">Barang yang dipinjamkan ke tamu: tahu ada di kamar mana, siapa yang mengantar.</p><div class="list">${pinjam.map(b=>{const out=Object.entries(b.lokasi);return `<div class="kartu row ${b.stok===0?'warn':'ok'}"><div class="t"><div><b>${b.nama}</b><small>total ${b.stok+out.reduce((a,[,n])=>a+n,0)} ${b.satuan}</small></div><div style="text-align:right"><div class="judul" style="font-size:1.2rem">${b.stok} <span class="small muted" style="font-weight:400">di gudang</span></div></div></div>${out.length?`<div class="aksi">${out.map(([k,n])=>`<span class="pill-room">${k}${n>1?" ×"+n:""}</span>`).join("")}</div>`:""}<div class="aksi"><button class="c" onclick="mutasi('${b.id}','Keluar')" ${b.stok?"":"disabled"}>→ Keluar ke kamar</button><button class="a" onclick="mutasi('${b.id}','Kembali')" ${out.length?"":"disabled"}>← Kembali</button></div></div>`;}).join("")}</div>`:""}
+  ${tabInv==="aset"?`<div class="kartu" style="padding:10px 12px" ><div class="kode mb">Standar tiap kamar</div>${S.aset.map(a=>`<span class="chip c-line" style="margin:2px">${a}</span>`).join("")}</div><p class="small muted mt mb">Ketuk kamar untuk cek. Merah = ada kekurangan, abu = belum pernah dicek.</p><div class="grid g2">${KAMAR.map(k=>{const c=S.cekAset[k];return `<button class="kartu row ${c?(c.hasil==="Lengkap"?"ok":"bad"):""}" style="text-align:left;cursor:pointer" onclick="cekAset('${k}')"><b>${k}</b>${c?`<small style="color:${c.hasil==="Lengkap"?"var(--pool)":"var(--clay)"}">${c.hasil==="Lengkap"?"✓":"⚠"} ${c.hasil}</small><small>${tgl(c.tgl)} · ${c.oleh}</small>${c.ringkas?`<small>${c.ringkas}</small>`:""}`:`<small>Belum dicek</small>`}</button>`;}).join("")}</div>`:""}
+  ${tabInv==="riwayat"?`<div class="list">${S.mutasi.map(m=>`<div class="kartu row"><div class="t"><div><b>${m.barang}</b><small>${tgl(m.tgl)} · ${m.oleh} · ${m.jenis==="Masuk"?"dari":"ke"} ${m.tujuan}</small></div><span class="chip ${m.jenis==="Masuk"?"c-pool":m.jenis==="Keluar"?"c-clay":m.jenis==="Kembali"?"c-amber":"c-line"}">${m.jenis} ${m.jumlah}</span></div></div>`).join("")||"<p class='muted'>Belum ada.</p>"}</div>`:""}`;
+};
+window.mutasi = (id,j) => {
+  const b=S.barang.find(x=>x.id===id);
+  const rooms = j==="Kembali"?Object.keys(b.lokasi):KAMAR;
+  sheet(`${b.nama} · ${j}`, `<label class="f">${j==="Koreksi"?"Stok sebenarnya (hitung fisik)":"Jumlah"} (${b.satuan})</label><input class="in" type="number" id="mJ" value="${j==="Koreksi"?b.stok:1}" min="0">
+    ${j==="Keluar"&&b.jenis==="Pinjam"||j==="Kembali"?`<label class="f">${j==="Kembali"?"Dari kamar":"Ke kamar"}</label><select class="in" id="mK">${rooms.map(k=>`<option>${k}</option>`).join("")}</select>`:j==="Keluar"?`<label class="f">Ke mana</label><select class="in" id="mK"><option>Kamar (isi ulang)</option><option>Laundry</option><option>Dibuang / rusak</option></select>`:j==="Masuk"?`<label class="f">Dari mana</label><select class="in" id="mK"><option>Pembelian</option><option>Stok awal</option></select>`:""}
+    <button class="tombol utama mt" style="width:100%" onclick="simpanMutasi('${id}','${j}')">Simpan</button>`);
+};
+window.simpanMutasi = (id,j) => {
+  const b=S.barang.find(x=>x.id===id); const n=+document.getElementById("mJ").value||0; const k=document.getElementById("mK")?document.getElementById("mK").value:"";
+  if(j==="Masuk") b.stok+=n;
+  if(j==="Keluar"){ if(n>b.stok) return toast(`Stok hanya ${b.stok}.`); b.stok-=n; if(b.jenis==="Pinjam") b.lokasi[k]=(b.lokasi[k]||0)+n; }
+  if(j==="Kembali"){ const ada=b.lokasi[k]||0; if(n>ada) return toast(`Di ${k} hanya ${ada}.`); b.stok+=n; if(ada-n<=0) delete b.lokasi[k]; else b.lokasi[k]=ada-n; }
+  if(j==="Koreksi") b.stok=n;
+  S.mutasi.unshift({tgl:ymd(today),jenis:j,barang:b.nama,jumlah:n,tujuan:k||"Stock opname",oleh:me.nama});
+  catat(`${j.toLowerCase()} ${n} ${b.satuan} ${b.nama}${k?" · "+k:""}`); save(); tutup(); toast("Tersimpan. Stok & riwayat terupdate."); render();
+};
+window.cekAset = k => {
+  const items = S.aset.map(a=>{const [nama,n]=a.split(" ×");return {nama,std:+n,ada:+n,kond:"Baik"};});
+  window._cek = items;
+  sheet(`Cek aset · ${k}`, `<div class="list">${items.map((it,i)=>`<div class="kartu" style="padding:10px 12px"><div class="t" style="display:flex;justify-content:space-between;align-items:center"><div><b>${it.nama}</b><small class="muted"> · standar ${it.std}</small></div><div style="display:flex;gap:4px;align-items:center"><button class="tombol kecil" onclick="_cek[${i}].ada=Math.max(0,_cek[${i}].ada-1);document.getElementById('a${i}').textContent=_cek[${i}].ada">−</button><b id="a${i}" style="min-width:20px;text-align:center">${it.ada}</b><button class="tombol kecil" onclick="_cek[${i}].ada++;document.getElementById('a${i}').textContent=_cek[${i}].ada">+</button></div></div><div class="aksi">${["Baik","Rusak","Hilang"].map(c=>`<button onclick="_cek[${i}].kond='${c}';this.parentNode.querySelectorAll('button').forEach(x=>x.className='');this.className='${c==="Baik"?"p":"c"}'" class="${c==="Baik"?"p":""}">${c}</button>`).join("")}</div></div>`).join("")}</div>
+    <button class="tombol utama mt" style="width:100%" onclick="simpanCek('${k}')">Simpan hasil cek</button>`);
+};
+window.simpanCek = k => {
+  const masalah = _cek.filter(i=>i.ada!==i.std||i.kond!=="Baik");
+  const ringkas = masalah.map(i=>`${i.nama}${i.ada!==i.std?` ${i.ada}/${i.std}`:""}${i.kond!=="Baik"?" "+i.kond.toLowerCase():""}`).join("; ");
+  S.cekAset[k]={tgl:ymd(today),oleh:me.nama,hasil:masalah.length?"Ada Kekurangan":"Lengkap",ringkas};
+  catat(`cek aset ${k}: ${masalah.length?"ada kekurangan":"lengkap"}`); save(); tutup(); toast(masalah.length?`Tersimpan: ${masalah.length} item bermasalah.`:"Tersimpan: semua aset lengkap."); render();
+};
+
+/* Purchase */
+V.purchase = () => {
+  let list=S.purchase.slice(); if(!isMgr()) list=list.filter(p=>p.divisi===me.divisi);
+  const total = S.purchase.filter(p=>p.status==="Dibeli").reduce((a,p)=>a+p.harga,0);
+  return `<div style="display:flex;justify-content:space-between;align-items:center"><h1 class="judul" style="font-size:1.3rem;margin:0">Purchase Request</h1>${!isMgr()?`<button class="tombol kecil utama" onclick="formPR()">+ Ajukan</button>`:""}</div>
+  ${isMgr()?`<div class="kartu tile mt mb"><div class="n" style="font-size:1.2rem">${rp(total)}</div><div class="l">total dibeli bulan ini (masuk ke laporan pengeluaran)</div></div>`:""}
+  <div class="list mt">${list.map(p=>{const aksi=[];
+    if(isSpv()&&p.divisi===me.divisi&&p.status==="Diajukan") aksi.push(`<button class="p" onclick="aksiPR('${p.id}','Disetujui')">Setujui</button>`,`<button class="c" onclick="aksiPR('${p.id}','Ditolak')">Tolak</button>`);
+    if(p.status==="Disetujui"&&(p.pemohon===me.id||isSpv()&&p.divisi===me.divisi)) aksi.push(`<button class="p" onclick="aksiPR('${p.id}','Dibeli')">📷 Sudah dibeli (foto nota)</button>`);
+    return `<div class="kartu row ${p.status==="Dibeli"?"ok":p.status==="Diajukan"?"warn":p.status==="Ditolak"?"bad":""}"><div class="t"><div><b>${p.nama}</b><small>${p.jumlah} ${p.satuan} · ${p.divisi} · oleh ${staf(p.pemohon).nama}${p.harga?` · ${rp(p.harga)}`:""}</small></div>${chipStatus(p.status)}</div>${aksi.length?`<div class="aksi">${aksi.join("")}</div>`:""}</div>`;}).join("")}</div>
+  <p class="small muted mt">Alur: Attendant ajukan → Supervisor divisi setujui → dibeli dengan foto nota wajib → Manager lihat rekap & total per divisi.</p>`;
+};
+window.formPR = () => sheet("Ajukan pembelian", `<label class="f">Nama barang</label><input class="in" id="pN" placeholder="mis. Pembersih kaca"><div class="grid g2"><div><label class="f">Jumlah</label><input class="in" type="number" id="pJ" value="1"></div><div><label class="f">Satuan</label><input class="in" id="pS" value="pcs"></div></div><button class="tombol utama mt" style="width:100%" onclick="simpanPR()">Ajukan</button>`);
+window.simpanPR = () => { const n=document.getElementById("pN").value.trim()||"Barang"; S.purchase.unshift({id:uid(),nama:n,divisi:me.divisi,jumlah:+document.getElementById("pJ").value||1,satuan:document.getElementById("pS").value||"pcs",harga:0,status:"Diajukan",pemohon:me.id}); catat(`mengajukan pembelian ${n}`); save(); tutup(); toast("Diajukan. Supervisor divisi dapat notifikasi."); render(); };
+window.aksiPR = (id,s) => { const p=S.purchase.find(x=>x.id===id); if(s==="Dibeli"){const v=prompt("Harga total (Rp):", p.harga||""); const h=+String(v||"").replace(/\D/g,""); if(!h) return; p.harga=h;} p.status=s; catat(`${s.toLowerCase()} pembelian ${p.nama}`); save(); toast(s==="Dibeli"?"Tercatat & masuk laporan pengeluaran.":`Status: ${s}`); render(); };
+
+/* Finance */
+V.finance = () => {
+  const cashIn = S.reservasi.reduce((a,r)=>a+r.bayar,0);
+  const booking = S.reservasi.filter(r=>["Confirmed","Checked-In","Checked-Out"].includes(r.status)).reduce((a,r)=>a+r.total,0);
+  const hutang = S.reservasi.filter(r=>["Confirmed","Checked-In","Checked-Out"].includes(r.status)).reduce((a,r)=>a+Math.max(0,r.total-r.bayar),0);
+  const pur = S.purchase.filter(p=>p.status==="Dibeli").reduce((a,p)=>a+p.harga,0);
+  const lain = S.pengeluaranLain.reduce((a,p)=>a+p.nominal,0);
+  const exp = pur+lain, net = cashIn-exp;
+  const bulan=["Jun","Jul","Agu","Sep","Okt","Nov"]; const inc=[31,38,44,36,41,Math.round(cashIn/1e6)], ex=[22,24,27,25,26,Math.round(exp/1e6)]; const mx=Math.max(...inc,...ex,1);
+  return `<h1 class="judul" style="font-size:1.3rem;margin:0 0 10px">Finance · Villa</h1>
+  <div class="grid g2 mb"><div class="kartu tile"><div class="n" style="font-size:1.1rem">${rp(cashIn)}</div><div class="l">cash in (per tanggal bayar)</div></div><div class="kartu tile"><div class="n" style="font-size:1.1rem">${rp(booking)}</div><div class="l">booking value (per check-in)</div></div></div>
+  <div class="kartu" style="padding:12px 14px">
+    <div class="kode mb">Laba rugi bulan ini (cash basis)</div>
+    <div class="pl"><span>Uang masuk booking</span><b>${rp(cashIn)}</b></div>
+    <div class="pl"><span>Purchase (dibeli)</span><span>− ${rp(pur)}</span></div>
+    ${S.pengeluaranLain.map(p=>`<div class="pl"><span>${p.nama} <span class="small muted">· ${p.kat}</span></span><span>− ${rp(p.nominal)}</span></div>`).join("")}
+    <div class="pl tot"><span>Net</span><span style="color:${net>=0?'var(--pool)':'var(--clay)'}">${rp(net)}</span></div>
+    <div class="small muted mt">Sisa tagihan tamu (belum masuk kas): <b style="color:var(--clay)">${rp(hutang)}</b> — muncul di bagian “carried over” bulan depan kalau belum dibayar.</div>
+  </div>
+  <div class="kartu mt" style="padding:12px 14px"><div class="kode">Tren 6 bulan (juta Rp) · hijau masuk, merah keluar</div>
+    <div class="bar">${bulan.map((b,i)=>`<div><div style="display:flex;flex-direction:row;gap:2px;align-items:flex-end;width:100%;height:90px"><i style="height:${Math.max(2,Math.round(inc[i]/mx*88))}px"></i><i class="e" style="height:${Math.max(2,Math.round(ex[i]/mx*88))}px"></i></div>${b}</div>`).join("")}</div></div>
+  <div class="kartu mt" style="padding:12px 14px"><div class="kode mb">Expense dari WhatsApp</div><p class="small">Staff kirim <code>#expense 85000 gas LPG</code> di grup → masuk antrean “Perlu dicek” → Manager setujui dengan upload nota → otomatis ke laporan. <button class="tombol kecil" onclick="toast('Contoh: pesan #expense 85000 gas LPG dari grup HK masuk antrean. Manager tinggal Approve.')">Simulasikan</button></p></div>
+  <p class="small muted mt">Di sistem asli: laporan villa / restoran / yoga terpisah, kategori expense mengikuti sheet akuntansi pemilik, export CSV, dan tampilan bahasa Inggris untuk pemilik.</p>`;
+};
+
+/* ───────── render ───────── */
+function render(){
+  const r = route();
+  document.getElementById("whoName").textContent = me.nama; document.getElementById("whoRole").textContent = me.peran+" · "+me.divisi;
+  document.getElementById("jam").textContent = now()+" WITA";
+  document.getElementById("nav").innerHTML = Object.keys(ROUTES).filter(k=>ROUTES[k].boleh()).map(k=>`<a href="#${k}" class="${r===k?'on':''}"><span>${ROUTES[k].ik}</span>${ROUTES[k].l}</a>`).join("");
+  document.getElementById("main").innerHTML = V[r]();
+  window.scrollTo({top:0});
+}
+const sel=document.getElementById("peran"); sel.innerHTML=STAFF.map(s=>`<option value="${s.id}" ${s.id===me.id?"selected":""}>${s.nama} · ${s.peran} ${s.peran!=="Manager"?s.divisi:""}</option>`).join("");
+sel.onchange=()=>{me=staf(sel.value);localStorage.setItem("demo-me",me.id);location.hash="beranda";render();toast(`Sekarang login sebagai ${me.nama} (${me.peran}). Menu & aksi menyesuaikan peran.`);};
+document.getElementById("reset").onclick=()=>{if(confirm("Kembalikan data demo ke awal?")){S=dataAwal();save();render();toast("Data demo direset.");}};
+setInterval(()=>{const j=document.getElementById("jam"); if(j) j.textContent=now()+" WITA";},30000);
+render();
+</script>
+</body>
+</html>

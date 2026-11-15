@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jasa Sistem Operasional untuk UMKM · Faiz Iqbal</title>
+<meta name="description" content="Sistem operasional web untuk villa, guesthouse, restoran, dan studio kelas: reservasi, housekeeping, absensi, purchasing, inventaris, dan laporan keuangan. Dibangun dan dijalankan sendiri di Villa Lotus 8, Bali.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f2f7;--surface:#ffffff;--surface-2:#ebe9f2;--ink:#17151f;--muted:#5d5969;--line:#dcd9e5;
+  --accent:#5a3ecf;--accent-soft:#e7e1ff;--jade:#0d8a68;--jade-soft:#d9f3ea;--amber:#b5820f;--amber-soft:#fbefd2;
+  --font-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:14px;--shadow:0 1px 2px rgba(23,21,31,.05),0 8px 24px -12px rgba(23,21,31,.18);color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#100f15;--surface:#19171f;--surface-2:#221f2b;--ink:#eceaf3;--muted:#a29eb1;--line:#2e2b38;--accent:#a993ff;--accent-soft:#2a2347;--jade:#43d1a3;--jade-soft:#123329;--amber:#e3b04b;--amber-soft:#3a2d10;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.7);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#100f15;--surface:#19171f;--surface-2:#221f2b;--ink:#eceaf3;--muted:#a29eb1;--line:#2e2b38;--accent:#a993ff;--accent-soft:#2a2347;--jade:#43d1a3;--jade-soft:#123329;--amber:#e3b04b;--amber-soft:#3a2d10;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.7);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}h1,h2,h3{font-family:var(--font-display);line-height:1.08;text-wrap:balance;margin:0}p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.mono{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.02em}
+.eyebrow{font-family:var(--font-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:10px}
+.eyebrow b{color:var(--accent);font-weight:500}
+header.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:1.05rem}
+.mark{width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:.8rem}
+.nav nav{display:flex;gap:4px;align-items:center}
+.nav nav a{text-decoration:none;color:var(--muted);font-size:.9rem;padding:6px 10px;border-radius:8px}
+.nav nav a:hover{color:var(--ink);background:var(--surface-2)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-family:var(--font-mono);font-size:.75rem}
+.lang button{border:0;background:transparent;color:var(--muted);padding:6px 10px;cursor:pointer;font:inherit}
+.lang button.on{background:var(--ink);color:var(--bg)}
+@media (max-width:760px){.nav nav a:not(.keep){display:none}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:11px;font-weight:600;font-size:.95rem;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-family:var(--font-body);transition:transform .15s ease,border-color .15s ease}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.jade{background:var(--jade);color:#fff;border-color:var(--jade)}
+.btn:hover{transform:translateY(-1px)}
+.hero{padding:clamp(48px,8vw,96px) 0 48px}
+.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+.status{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.85rem;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--jade);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--jade) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.hero h1{font-size:clamp(2.3rem,5.6vw,4.2rem);font-weight:800;letter-spacing:-.03em;margin:22px 0 18px}
+.hero h1 span{color:var(--accent)}
+.lede{max-width:58ch;margin-top:8px;font-size:1.08rem;color:var(--muted)}
+.lede strong{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+@media (max-width:760px){.proof{grid-template-columns:repeat(2,1fr)}}
+.proof .p{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.proof .n{font-family:var(--font-display);font-size:1.8rem;font-weight:800;letter-spacing:-.02em}
+.proof .l{color:var(--muted);font-size:.85rem;line-height:1.35}
+/* phone mock */
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:14px;box-shadow:var(--shadow);max-width:360px;margin:0 auto;position:relative}
+.phone .scr{background:var(--bg);border-radius:18px;padding:14px;min-height:420px;font-size:.85rem}
+.phone .bar{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.7rem;color:var(--muted);margin-bottom:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.tile b{display:block;font-size:.9rem}
+.tile small{color:var(--muted)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:600}
+.pill.j{background:var(--jade-soft);color:var(--jade)}.pill.a{background:var(--amber-soft);color:var(--amber)}.pill.v{background:var(--accent-soft);color:var(--accent)}
+.phone .tap{position:absolute;right:-10px;bottom:70px;background:var(--ink);color:var(--bg);font-family:var(--font-mono);font-size:.7rem;padding:6px 10px;border-radius:999px;transform:rotate(-6deg)}
+section{padding:clamp(56px,8vw,96px) 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:1fr 1.2fr;gap:24px 48px;align-items:end;margin-bottom:36px}
+@media (max-width:760px){.sec-head{grid-template-columns:1fr}}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:-.025em;margin-top:12px}
+.sec-head p{color:var(--muted);max-width:60ch}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:860px){.grid3{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.grid3,.grid2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:1.15rem;font-weight:700;margin:10px 0 6px}
+.card p{color:var(--muted);font-size:.95rem}
+.card .ic{width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:1.2rem}
+.card ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:.92rem}
+.card li{margin:3px 0}
+.tag{display:inline-block;background:var(--surface-2);border-radius:999px;padding:3px 10px;font-size:.78rem;font-family:var(--font-mono);margin:3px 3px 0 0}
+/* modules */
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:900px){.mods{grid-template-columns:repeat(2,1fr)}}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:.9rem}
+.mod b{display:block;font-family:var(--font-display);font-size:1rem}
+.mod span{color:var(--muted);font-size:.85rem}
+.mod .st{float:right;font-family:var(--font-mono);font-size:.68rem;color:var(--jade)}
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;position:relative}
+.step::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--font-mono);color:var(--accent);font-size:.8rem}
+.step h3{font-size:1.05rem;margin:6px 0 6px}
+.step p{color:var(--muted);font-size:.92rem}
+/* case */
+.case{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+@media (max-width:860px){.case{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.kv div{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:.9rem}
+.kv small{display:block;color:var(--muted);font-size:.75rem;font-family:var(--font-mono)}
+.quote{border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);font-style:italic;margin-top:18px}
+/* pricing */
+.plan{display:flex;flex-direction:column}
+.plan .price{font-family:var(--font-display);font-size:1.6rem;font-weight:800;letter-spacing:-.02em;margin:8px 0 2px}
+.plan .for{color:var(--muted);font-size:.85rem;min-height:2.6em}
+.plan.hi{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.plan .btn{margin-top:auto;justify-content:center}
+/* faq */
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--muted)}details[open] summary::after{content:"−"}
+details p{color:var(--muted);margin-top:8px;font-size:.95rem}
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,40px)}
+@media (max-width:760px){.contact{grid-template-columns:1fr}}
+.contact h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;letter-spacing:-.02em}
+.contact p{color:var(--muted);margin-top:10px}
+.c-list{display:flex;flex-direction:column;gap:10px}
+.c-item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none}
+.c-item small{display:block;color:var(--muted);font-family:var(--font-mono);font-size:.72rem}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="mark">FI</span><span data-t="brand">Faiz Iqbal · Sistem Operasional</span></a>
+    <nav aria-label="Sections">
+      <a href="#layanan" data-t="n1">Layanan</a>
+      <a href="#modul" data-t="n2">Modul</a>
+      <a href="#studi" data-t="n3">Studi kasus</a>
+      <a href="#paket" data-t="n4">Paket</a>
+      <a href="../demo/" class="keep" data-t="n5">Coba demo</a>
+      <span class="lang" role="group" aria-label="Bahasa"><button data-lang="id" class="on">ID</button><button data-lang="en">EN</button></span>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="status"><span class="dot"></span><span data-t="status">Dipakai setiap hari oleh tim Villa Lotus 8, Canggu</span></span>
+        <h1 data-t="h1" data-html="1">Sistem operasional <span>yang dipakai tim lapangan,</span> bukan cuma manajemen.</h1>
+        <p class="lede" data-t="lede" data-html="1">Saya membangun aplikasi operasional untuk villa, guesthouse, restoran, dan studio kelas — reservasi, housekeeping, absensi, purchasing, inventaris, sampai laporan laba-rugi — lalu <strong>menjalankannya sendiri sebagai General Manager</strong>. Sekarang sistem yang sama bisa dipakai usaha Anda.</p>
+        <div class="cta">
+          <a class="btn primary" href="../demo/" data-t="cta1">Coba demo interaktif →</a>
+          <a class="btn" href="https://wa.me/6282124760046?text=Halo%20Faiz%2C%20saya%20tertarik%20sistem%20operasional%20untuk%20usaha%20saya" target="_blank" rel="noopener" data-t="cta2">Ngobrol via WhatsApp</a>
+        </div>
+      </div>
+      <div class="phone" aria-hidden="true">
+        <div class="scr">
+          <div class="bar"><span>LOTUS 8 · HOUSEKEEPING</span><span>09:41</span></div>
+          <div class="tile"><b>Room C · Check-Out Cleaning</b><small>Checklist 12 item · foto wajib</small> <span class="pill a">Dikerjakan</span></div>
+          <div class="tile"><b>Room 2 · Request Tamu</b><small>Diminta jam 10:30 – 12:30</small> <span class="pill v">Belum diambil</span></div>
+          <div class="tile"><b>Absensi</b><small>Masuk 07:58 · tepat waktu · selfie + lokasi</small> <span class="pill j">✓</span></div>
+          <div class="tile"><b>Inventaris</b><small>Hairdryer: 1 di gudang · Room 5 ×1</small></div>
+          <div class="tile"><b>Purchase Request</b><small>Chemical floor 5 L — menunggu Supervisor</small> <span class="pill a">Diajukan</span></div>
+        </div>
+        <span class="tap" data-t="tap">dibuka dari HP staff</span>
+      </div>
+    </div>
+    <div class="proof">
+      <div class="p"><div class="n">20+</div><div class="l" data-t="p1">modul berjalan di produksi</div></div>
+      <div class="p"><div class="n">3</div><div class="l" data-t="p2">unit usaha dalam satu sistem: villa, restoran, yoga</div></div>
+      <div class="p"><div class="n">4</div><div class="l" data-t="p3">divisi: housekeeping, bar, kitchen, security</div></div>
+      <div class="p"><div class="n">0</div><div class="l" data-t="p4">spreadsheet tersisa untuk operasional harian</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="layanan">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>01</b> <span data-t="s1e">Layanan</span></div><h2 data-t="s1h">Tiga cara saya bisa membantu.</h2></div>
+      <p data-t="s1p">Dari sekadar merapikan alur kerja sampai sistem lengkap yang dipakai tim setiap hari. Semuanya berangkat dari operasional nyata, bukan template.</p>
+    </div>
+    <div class="grid3">
+      <article class="card reveal">
+        <div class="ic">🗂️</div>
+        <h3 data-t="l1h">Sistem operasional siap pakai</h3>
+        <p data-t="l1p">Aplikasi web (bisa dipasang di HP) untuk reservasi, housekeeping, absensi, purchasing, inventaris, dan keuangan. Dipasang dengan data dan aturan usaha Anda, siap dipakai dalam hitungan minggu.</p>
+        <ul><li data-t="l1a">Login per staff, peran Attendant / Supervisor / Manager</li><li data-t="l1b">Foto wajib, lokasi, dan jejak siapa-kapan di tiap aksi</li><li data-t="l1c">Data tetap milik Anda (Notion / Google Sheets)</li></ul>
+      </article>
+      <article class="card reveal">
+        <div class="ic">🧭</div>
+        <h3 data-t="l2h">Pembenahan operasional &amp; SOP</h3>
+        <p data-t="l2p">Audit alur kerja harian, susun SOP per divisi menjadi checklist yang benar-benar dijalankan, dan tentukan angka apa yang perlu dilihat pemilik setiap hari.</p>
+        <ul><li data-t="l2a">SOP housekeeping, bar, kitchen, security</li><li data-t="l2b">Struktur peran, approval, dan eskalasi</li><li data-t="l2c">Format laporan harian / mingguan / bulanan</li></ul>
+      </article>
+      <article class="card reveal">
+        <div class="ic">🛠️</div>
+        <h3 data-t="l3h">Pendampingan &amp; pengembangan lanjutan</h3>
+        <p data-t="l3p">Setelah sistem jalan, saya tetap mendampingi: melatih tim, menyesuaikan modul saat usaha berubah, dan menambah integrasi (booking online, payment, WhatsApp).</p>
+        <ul><li data-t="l3a">Pelatihan staff &amp; supervisor</li><li data-t="l3b">Perubahan modul bulanan</li><li data-t="l3c">Integrasi booking engine &amp; pembayaran QRIS</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="modul">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>02</b> <span data-t="s2e">Modul</span></div><h2 data-t="s2h">Pilih yang dibutuhkan, tambah nanti kalau perlu.</h2></div>
+      <p data-t="s2p">Semua modul di bawah ini sudah berjalan di produksi dan saling terhubung: check-out tamu otomatis membuat tugas cleaning, purchase yang disetujui masuk ke laporan pengeluaran, absensi dibandingkan dengan jadwal shift.</p>
+    </div>
+    <div class="mods" id="mods"></div>
+    <p style="margin-top:18px;color:var(--muted);font-size:.9rem"><a href="../demo/" style="color:var(--accent)" data-t="modcta">Semua modul bisa dicoba di demo interaktif →</a></p>
+  </div>
+</section>
+
+<section id="studi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>03</b> <span data-t="s3e">Studi kasus</span></div><h2 data-t="s3h">Villa Lotus 8, Canggu: dari Excel ke satu sistem.</h2></div>
+      <p data-t="s3p">Villa 23 kamar, restoran Jepang Tane, dan studio yoga rooftop Kaze — satu manajemen, tiga jenis operasional, 15–40 karyawan.</p>
+    </div>
+    <div class="case">
+      <div class="card reveal">
+        <div class="eyebrow"><b data-t="c1">Masalah</b></div>
+        <p style="margin-top:8px;color:var(--ink)" data-t="c1p">Pembukuan, reservasi, dan absensi tersebar di belasan file Excel dan grup WhatsApp. Tidak ada jejak siapa mengerjakan apa, kamar bisa double-booking, SOP housekeeping ada di kertas tapi tidak dijalankan, dan pemilik baru tahu angka di akhir bulan.</p>
+        <div class="eyebrow" style="margin-top:20px"><b data-t="c2">Yang dibangun</b></div>
+        <ul style="margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:.95rem">
+          <li data-t="c2a">Task tracker 4 divisi dengan checklist per zona dan foto wajib</li>
+          <li data-t="c2b">Reservasi + kalender anti double-booking, check-in mandiri via QR, booking online publik</li>
+          <li data-t="c2c">Absensi selfie + geofence, jadwal shift, deteksi telat, slip gaji</li>
+          <li data-t="c2d">Purchase request berjenjang, inventaris HK, QR layanan kamar untuk tamu</li>
+          <li data-t="c2e">Laporan keuangan villa / restoran / yoga (cash basis), expense via WhatsApp</li>
+          <li data-t="c2f">Loyalty member gabungan restoran + yoga</li>
+        </ul>
+        <div class="eyebrow" style="margin-top:20px"><b data-t="c3">Hasil</b></div>
+        <p style="margin-top:8px;color:var(--ink)" data-t="c3p">Operasional harian tanpa spreadsheet. Pemilik melihat pendapatan, pengeluaran, dan hutang tamu kapan saja dalam bahasa Inggris; staff memakai aplikasi yang sama dalam bahasa Indonesia dari HP masing-masing.</p>
+      </div>
+      <div>
+        <div class="kv">
+          <div><small data-t="k1">Skala</small><span data-t="k1v">23 kamar · 3 unit usaha</span></div>
+          <div><small data-t="k2">Tim</small><span data-t="k2v">15–40 staff · 4 divisi</span></div>
+          <div><small data-t="k3">Waktu bangun</small><span data-t="k3v">Jul – Nov 2026</span></div>
+          <div><small data-t="k4">Biaya infrastruktur</small>≈ Rp 0 / bulan*</div>
+        </div>
+        <p class="mono" style="color:var(--muted);margin-top:8px;font-size:.72rem" data-t="kn">*Memakai paket gratis Vercel + Notion; biaya naik hanya jika volume data besar.</p>
+        <div class="quote" data-t="q">“Sistemnya saya pakai sendiri setiap hari sebagai GM — jadi setiap tombol ada karena memang dibutuhkan di lapangan, bukan karena bagus di presentasi.”</div>
+        <div style="margin-top:18px">
+          <span class="tag">Next.js</span><span class="tag">Notion</span><span class="tag">Vercel</span><span class="tag">PWA</span><span class="tag">QRIS</span><span class="tag">WhatsApp API</span>
+        </div>
+        <div class="cta"><a class="btn jade" href="../demo/" data-t="ccta">Lihat sistemnya berjalan →</a><a class="btn" href="../#projects" data-t="ccta2">Portofolio lengkap</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cara">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>04</b> <span data-t="s4e">Cara kerja</span></div><h2 data-t="s4h">Empat langkah, mulai dari obrolan.</h2></div>
+      <p data-t="s4p">Tidak ada proposal 40 halaman. Kita mulai dari masalah paling mengganggu, pasang modul yang menyelesaikannya, lalu lanjut.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><h3 data-t="w1h">Ngobrol 30 menit</h3><p data-t="w1p">Ceritakan alur harian usaha Anda. Saya bantu petakan mana yang paling banyak membuang waktu atau uang.</p></div>
+      <div class="step reveal"><h3 data-t="w2h">Pasang modul pertama</h3><p data-t="w2p">Biasanya 1–2 minggu: setup database, aturan usaha (kamar, tarif, shift, kategori biaya), akun staff, dan pelatihan singkat.</p></div>
+      <div class="step reveal"><h3 data-t="w3h">Jalan paralel 2 minggu</h3><p data-t="w3p">Tim memakai sistem sambil cara lama masih ada. Kita rapikan apa yang bikin tersandung, bukan apa yang ada di rencana.</p></div>
+      <div class="step reveal"><h3 data-t="w4h">Lanjut per modul</h3><p data-t="w4p">Setelah stabil, tambah modul berikutnya. Anda bayar per tahap, bisa berhenti kapan saja, data tetap milik Anda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="paket">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>05</b> <span data-t="s5e">Paket</span></div><h2 data-t="s5h">Mulai kecil, bayar per tahap.</h2></div>
+      <p data-t="s5p">Harga menyesuaikan jumlah modul dan ukuran tim. Yang pasti: tidak ada biaya lisensi per user, dan infrastruktur bisa berjalan di paket gratis untuk usaha kecil.</p>
+    </div>
+    <div class="grid3">
+      <article class="card plan reveal">
+        <div class="eyebrow"><b>A</b> <span data-t="pa">Mulai</span></div>
+        <div class="price" data-t="pa$">1 modul</div>
+        <p class="for" data-t="paf">Untuk usaha yang ingin menyelesaikan satu masalah dulu: absensi, housekeeping, atau reservasi.</p>
+        <ul><li data-t="paa">Setup + aturan usaha Anda</li><li data-t="pab">Akun staff &amp; pelatihan 1 sesi</li><li data-t="pac">Pendampingan 2 minggu</li></ul>
+        <a class="btn" href="https://wa.me/6282124760046?text=Halo%20Faiz%2C%20saya%20tertarik%20paket%20Mulai%20(1%20modul)" target="_blank" rel="noopener" data-t="pbtn">Tanya penawaran</a>
+      </article>
+      <article class="card plan hi reveal">
+        <div class="eyebrow"><b>B</b> <span data-t="pb">Operasional</span></div>
+        <div class="price" data-t="pb$">3–5 modul</div>
+        <p class="for" data-t="pbf">Paket paling umum: tugas &amp; SOP, absensi + jadwal, purchase request, dan laporan keuangan dasar.</p>
+        <ul><li data-t="pba">Semua di paket Mulai</li><li data-t="pbb">Dashboard pemilik (ID/EN)</li><li data-t="pbc">Pendampingan 1 bulan + perubahan kecil</li></ul>
+        <a class="btn primary" href="https://wa.me/6282124760046?text=Halo%20Faiz%2C%20saya%20tertarik%20paket%20Operasional%20(3-5%20modul)" target="_blank" rel="noopener" data-t="pbtn">Tanya penawaran</a>
+      </article>
+      <article class="card plan reveal">
+        <div class="eyebrow"><b>C</b> <span data-t="pc">Lengkap + pendampingan</span></div>
+        <div class="price" data-t="pc$">Semua modul</div>
+        <p class="for" data-t="pcf">Untuk properti atau grup usaha yang mau pindah total dari spreadsheet, termasuk booking online dan pembayaran.</p>
+        <ul><li data-t="pca">Semua modul + booking engine publik</li><li data-t="pcb">Integrasi QRIS &amp; WhatsApp</li><li data-t="pcc">Retainer bulanan: pengembangan &amp; support</li></ul>
+        <a class="btn" href="https://wa.me/6282124760046?text=Halo%20Faiz%2C%20saya%20tertarik%20paket%20Lengkap" target="_blank" rel="noopener" data-t="pbtn">Tanya penawaran</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><b>06</b> FAQ</div><h2 data-t="s6h">Yang sering ditanyakan.</h2></div>
+    </div>
+    <div class="grid2">
+      <div>
+        <details><summary data-t="f1q">Usaha saya bukan villa. Masih relevan?</summary><p data-t="f1a">Ya. Modul tugas/SOP, absensi, purchasing, inventaris, dan keuangan dipakai lintas jenis usaha — restoran, kafe, studio, klinik kecil, kos-kosan. Yang spesifik properti hanya reservasi &amp; housekeeping.</p></details>
+        <details><summary data-t="f2q">Datanya disimpan di mana?</summary><p data-t="f2a">Di akun Notion (atau Google Sheets) milik Anda sendiri. Anda bisa membuka, mengekspor, dan membawanya kapan saja tanpa tergantung saya.</p></details>
+        <details><summary data-t="f3q">Staff saya tidak terbiasa aplikasi.</summary><p data-t="f3a">Sistem ini memang dirancang untuk housekeeper dan staff bar yang memakai HP dengan tangan basah: tombol besar, satu layar satu tugas, foto dari kamera, tanpa istilah teknis. Pelatihan biasanya cukup 1 sesi.</p></details>
+      </div>
+      <div>
+        <details><summary data-t="f4q">Berapa biaya bulanannya?</summary><p data-t="f4a">Infrastruktur (Vercel + Notion) gratis untuk skala UMKM. Biaya yang ada adalah jasa setup per modul dan, kalau mau, retainer pendampingan bulanan. Tidak ada biaya per user.</p></details>
+        <details><summary data-t="f5q">Bisa terhubung ke Airbnb / Booking.com / POS?</summary><p data-t="f5a">Reservasi dari OTA bisa dicatat dengan status khusus (Pending Agoda / Booking.com) dan masuk laporan. Integrasi otomatis penuh tergantung akses API masing-masing platform — kita bahas saat ngobrol.</p></details>
+        <details><summary data-t="f6q">Kalau saya berhenti, sistemnya bagaimana?</summary><p data-t="f6a">Tetap jalan. Kode ada di repositori GitHub Anda, data di Notion Anda. Saya serahkan dokumentasi dan akses penuh.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontak" style="border-top:0">
+  <div class="wrap">
+    <div class="contact reveal">
+      <div>
+        <h2 data-t="kh">Ceritakan operasional Anda. 30 menit, tanpa komitmen.</h2>
+        <p data-t="kp">Paling enak lewat WhatsApp. Kirim jenis usaha, jumlah tim, dan satu hal yang paling bikin repot setiap hari — saya balas dengan usulan modul pertama.</p>
+      </div>
+      <div class="c-list">
+        <a class="c-item" href="https://wa.me/6282124760046?text=Halo%20Faiz%2C%20saya%20mau%20konsultasi%20sistem%20operasional" target="_blank" rel="noopener"><span><small>WhatsApp</small>+62 821-2476-0046</span><span aria-hidden="true">↗</span></a>
+        <a class="c-item" href="../demo/"><span><small data-t="kd">Coba dulu</small><span data-t="kd2">Demo interaktif dengan data contoh</span></span><span aria-hidden="true">→</span></a>
+        <a class="c-item" href="../" ><span><small data-t="kp2">Tentang saya</small>Muhammad Faiz Iqbal · GM Villa Lotus 8</span><span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>© 2026 Muhammad Faiz Iqbal</span><span class="mono">Canggu, Bali · UTC+8</span></div></footer>
+
+<script>
+const MODS = [
+  ["Tugas & SOP","Task & SOP tracker","Checklist per zona, foto wajib, inspeksi supervisor","Zone checklists, mandatory photos, supervisor review"],
+  ["Reservasi & kalender","Reservations & calendar","Harian/mingguan/bulanan, anti double-booking, extend, pindah kamar","Daily/weekly/monthly rates, no double-booking, extend, room move"],
+  ["Check-in mandiri","Self check-in","Tamu scan QR, upload ID, otomatis Checked-In","Guest scans QR, uploads ID, auto Checked-In"],
+  ["Booking online","Direct booking","Halaman publik, hold 30 menit, DP/lunas","Public page, 30-min hold, deposit or full"],
+  ["Housekeeping","Housekeeping","Status kamar, request tamu via QR, cleaning otomatis saat check-out","Room status, guest requests via QR, auto cleaning task on check-out"],
+  ["Absensi","Attendance","Selfie + geofence, shift malam, deteksi telat","Selfie + geofence, night shift, late detection"],
+  ["Jadwal shift","Shift scheduling","Staff ajukan, manager setujui, jadi acuan absensi","Staff propose, manager approves, drives attendance"],
+  ["Gaji & cuti","Payroll & leave","Slip gaji, lembur, kasbon, cuti & sakit","Payslips, overtime, cash advance, leave & sick days"],
+  ["Purchase request","Purchase request","Diajukan → disetujui → dibeli, foto nota, rekap per divisi","Requested → approved → bought, receipt photo, per-division recap"],
+  ["Inventaris","Inventory","Stok masuk/keluar, barang by-request per kamar, cek aset kamar","Stock in/out, by-request items per room, room asset checks"],
+  ["Temuan & maintenance","Issues & maintenance","Lapor kerusakan dengan foto, prioritas, jadi task","Report damage with photo, priority, becomes a task"],
+  ["Keuangan villa","Villa finance","Cash in per tanggal bayar, hutang tamu, P&L","Cash-in by payment date, guest balances, P&L"],
+  ["Keuangan resto & kelas","F&B & class finance","Sales harian, expense per kategori, bagi hasil instruktur","Daily sales, expenses by category, instructor revenue share"],
+  ["Expense via WhatsApp","Expenses via WhatsApp","Kirim #expense di grup → antre persetujuan manager","Send #expense in a group → manager approval queue"],
+  ["Loyalty member","Loyalty","Kartu digital via QR, poin gabungan antar unit usaha","Digital card via QR, shared points across units"],
+  ["Dashboard pemilik","Owner dashboard","Semua angka hari ini, dua bahasa, dari HP","Today's numbers, two languages, from a phone"],
+];
+const T = {
+  brand:["Faiz Iqbal · Sistem Operasional","Faiz Iqbal · Operations Systems"],
+  n1:["Layanan","Services"],n2:["Modul","Modules"],n3:["Studi kasus","Case study"],n4:["Paket","Packages"],n5:["Coba demo","Try the demo"],
+  status:["Dipakai setiap hari oleh tim Villa Lotus 8, Canggu","Used every day by the Villa Lotus 8 team, Canggu"],
+  h1:["Sistem operasional <span>yang dipakai tim lapangan,</span> bukan cuma manajemen.","Operations software <span>your floor staff actually use,</span> not just management."],
+  lede:["Saya membangun aplikasi operasional untuk villa, guesthouse, restoran, dan studio kelas — reservasi, housekeeping, absensi, purchasing, inventaris, sampai laporan laba-rugi — lalu <strong>menjalankannya sendiri sebagai General Manager</strong>. Sekarang sistem yang sama bisa dipakai usaha Anda.","I build operations software for villas, guesthouses, restaurants and class studios — reservations, housekeeping, attendance, purchasing, inventory, through to P&L — and <strong>run it myself as General Manager</strong>. The same system is now available for your business."],
+  cta1:["Coba demo interaktif →","Try the interactive demo →"],cta2:["Ngobrol via WhatsApp","Chat on WhatsApp"],tap:["dibuka dari HP staff","opened from a staff phone"],
+  p1:["modul berjalan di produksi","modules running in production"],p2:["unit usaha dalam satu sistem: villa, restoran, yoga","business units on one system: villa, restaurant, yoga"],p3:["divisi: housekeeping, bar, kitchen, security","divisions: housekeeping, bar, kitchen, security"],p4:["spreadsheet tersisa untuk operasional harian","spreadsheets left for daily operations"],
+  s1e:["Layanan","Services"],s1h:["Tiga cara saya bisa membantu.","Three ways I can help."],s1p:["Dari sekadar merapikan alur kerja sampai sistem lengkap yang dipakai tim setiap hari. Semuanya berangkat dari operasional nyata, bukan template.","From tidying up a workflow to a full system your team uses daily. All of it comes from real operations, not templates."],
+  l1h:["Sistem operasional siap pakai","Ready-to-run operations system"],l1p:["Aplikasi web (bisa dipasang di HP) untuk reservasi, housekeeping, absensi, purchasing, inventaris, dan keuangan. Dipasang dengan data dan aturan usaha Anda, siap dipakai dalam hitungan minggu.","A web app (installable on phones) for reservations, housekeeping, attendance, purchasing, inventory and finance. Set up with your data and rules, live within weeks."],
+  l1a:["Login per staff, peran Attendant / Supervisor / Manager","Per-staff login, Attendant / Supervisor / Manager roles"],l1b:["Foto wajib, lokasi, dan jejak siapa-kapan di tiap aksi","Mandatory photos, location and who-did-what on every action"],l1c:["Data tetap milik Anda (Notion / Google Sheets)","Your data stays yours (Notion / Google Sheets)"],
+  l2h:["Pembenahan operasional & SOP","Operations & SOP overhaul"],l2p:["Audit alur kerja harian, susun SOP per divisi menjadi checklist yang benar-benar dijalankan, dan tentukan angka apa yang perlu dilihat pemilik setiap hari.","Audit daily workflows, turn per-division SOPs into checklists that actually get done, and decide which numbers the owner sees each day."],
+  l2a:["SOP housekeeping, bar, kitchen, security","Housekeeping, bar, kitchen, security SOPs"],l2b:["Struktur peran, approval, dan eskalasi","Roles, approvals and escalation"],l2c:["Format laporan harian / mingguan / bulanan","Daily / weekly / monthly report formats"],
+  l3h:["Pendampingan & pengembangan lanjutan","Ongoing support & development"],l3p:["Setelah sistem jalan, saya tetap mendampingi: melatih tim, menyesuaikan modul saat usaha berubah, dan menambah integrasi (booking online, payment, WhatsApp).","Once live, I stay on: training the team, adjusting modules as the business changes, adding integrations (online booking, payments, WhatsApp)."],
+  l3a:["Pelatihan staff & supervisor","Staff & supervisor training"],l3b:["Perubahan modul bulanan","Monthly module changes"],l3c:["Integrasi booking engine & pembayaran QRIS","Booking engine & QRIS payment integration"],
+  s2e:["Modul","Modules"],s2h:["Pilih yang dibutuhkan, tambah nanti kalau perlu.","Pick what you need, add more later."],s2p:["Semua modul di bawah ini sudah berjalan di produksi dan saling terhubung: check-out tamu otomatis membuat tugas cleaning, purchase yang disetujui masuk ke laporan pengeluaran, absensi dibandingkan dengan jadwal shift.","Every module below runs in production and connects to the others: a guest check-out creates the cleaning task, an approved purchase lands in the expense report, attendance is checked against the shift schedule."],
+  modcta:["Semua modul bisa dicoba di demo interaktif →","Try every module in the interactive demo →"],
+  s3e:["Studi kasus","Case study"],s3h:["Villa Lotus 8, Canggu: dari Excel ke satu sistem.","Villa Lotus 8, Canggu: from Excel to one system."],s3p:["Villa 23 kamar, restoran Jepang Tane, dan studio yoga rooftop Kaze — satu manajemen, tiga jenis operasional, 15–40 karyawan.","A 23-room villa, Japanese restaurant Tane and rooftop yoga studio Kaze — one management, three kinds of operations, 15–40 staff."],
+  c1:["Masalah","Problem"],c1p:["Pembukuan, reservasi, dan absensi tersebar di belasan file Excel dan grup WhatsApp. Tidak ada jejak siapa mengerjakan apa, kamar bisa double-booking, SOP housekeeping ada di kertas tapi tidak dijalankan, dan pemilik baru tahu angka di akhir bulan.","Bookkeeping, reservations and attendance lived in a dozen Excel files and WhatsApp groups. No trace of who did what, rooms could be double-booked, housekeeping SOPs existed on paper only, and the owner saw numbers at month-end."],
+  c2:["Yang dibangun","What was built"],c2a:["Task tracker 4 divisi dengan checklist per zona dan foto wajib","Task tracker for 4 divisions with zone checklists and mandatory photos"],c2b:["Reservasi + kalender anti double-booking, check-in mandiri via QR, booking online publik","Reservations + no-double-booking calendar, QR self check-in, public direct booking"],c2c:["Absensi selfie + geofence, jadwal shift, deteksi telat, slip gaji","Selfie + geofence attendance, shift schedule, late detection, payslips"],c2d:["Purchase request berjenjang, inventaris HK, QR layanan kamar untuk tamu","Tiered purchase requests, HK inventory, in-room QR service for guests"],c2e:["Laporan keuangan villa / restoran / yoga (cash basis), expense via WhatsApp","Villa / restaurant / yoga finance (cash basis), expenses via WhatsApp"],c2f:["Loyalty member gabungan restoran + yoga","Shared restaurant + yoga loyalty programme"],
+  c3:["Hasil","Result"],c3p:["Operasional harian tanpa spreadsheet. Pemilik melihat pendapatan, pengeluaran, dan hutang tamu kapan saja dalam bahasa Inggris; staff memakai aplikasi yang sama dalam bahasa Indonesia dari HP masing-masing.","Daily operations without spreadsheets. The owner sees revenue, expenses and guest balances any time in English; staff use the same app in Indonesian from their own phones."],
+  k1v:["23 kamar · 3 unit usaha","23 rooms · 3 business units"],k2v:["15–40 staff · 4 divisi","15–40 staff · 4 divisions"],k3v:["Jul – Nov 2026","Jul – Nov 2026"],
+  k1:["Skala","Scale"],k2:["Tim","Team"],k3:["Waktu bangun","Build time"],k4:["Biaya infrastruktur","Infrastructure cost"],kn:["*Memakai paket gratis Vercel + Notion; biaya naik hanya jika volume data besar.","*On Vercel + Notion free tiers; cost rises only with large data volumes."],
+  q:["“Sistemnya saya pakai sendiri setiap hari sebagai GM — jadi setiap tombol ada karena memang dibutuhkan di lapangan, bukan karena bagus di presentasi.”","“I use the system myself every day as GM — so every button exists because the floor needed it, not because it looked good in a deck.”"],
+  ccta:["Lihat sistemnya berjalan →","See the system running →"],ccta2:["Portofolio lengkap","Full portfolio"],
+  s4e:["Cara kerja","How it works"],s4h:["Empat langkah, mulai dari obrolan.","Four steps, starting with a conversation."],s4p:["Tidak ada proposal 40 halaman. Kita mulai dari masalah paling mengganggu, pasang modul yang menyelesaikannya, lalu lanjut.","No 40-page proposal. We start with the most painful problem, ship the module that fixes it, then continue."],
+  w1h:["Ngobrol 30 menit","A 30-minute chat"],w1p:["Ceritakan alur harian usaha Anda. Saya bantu petakan mana yang paling banyak membuang waktu atau uang.","Walk me through your daily flow. I'll map where the most time or money leaks."],
+  w2h:["Pasang modul pertama","Ship the first module"],w2p:["Biasanya 1–2 minggu: setup database, aturan usaha (kamar, tarif, shift, kategori biaya), akun staff, dan pelatihan singkat.","Usually 1–2 weeks: database setup, your rules (rooms, rates, shifts, expense categories), staff accounts and a short training."],
+  w3h:["Jalan paralel 2 minggu","Run in parallel for 2 weeks"],w3p:["Tim memakai sistem sambil cara lama masih ada. Kita rapikan apa yang bikin tersandung, bukan apa yang ada di rencana.","The team uses the system while the old way still exists. We fix what trips people up, not what's on the plan."],
+  w4h:["Lanjut per modul","Continue module by module"],w4p:["Setelah stabil, tambah modul berikutnya. Anda bayar per tahap, bisa berhenti kapan saja, data tetap milik Anda.","Once stable, add the next module. You pay per stage, can stop any time, and keep your data."],
+  s5e:["Paket","Packages"],s5h:["Mulai kecil, bayar per tahap.","Start small, pay per stage."],s5p:["Harga menyesuaikan jumlah modul dan ukuran tim. Yang pasti: tidak ada biaya lisensi per user, dan infrastruktur bisa berjalan di paket gratis untuk usaha kecil.","Pricing depends on module count and team size. What's certain: no per-user licence fees, and infrastructure can run on free tiers for small businesses."],
+  pa:["Mulai","Starter"],"pa$":["1 modul","1 module"],paf:["Untuk usaha yang ingin menyelesaikan satu masalah dulu: absensi, housekeeping, atau reservasi.","For a business that wants to fix one problem first: attendance, housekeeping or reservations."],paa:["Setup + aturan usaha Anda","Setup + your business rules"],pab:["Akun staff & pelatihan 1 sesi","Staff accounts & one training session"],pac:["Pendampingan 2 minggu","2 weeks of support"],
+  pb:["Operasional","Operations"],"pb$":["3–5 modul","3–5 modules"],pbf:["Paket paling umum: tugas & SOP, absensi + jadwal, purchase request, dan laporan keuangan dasar.","The most common package: tasks & SOP, attendance + schedule, purchase requests and basic finance."],pba:["Semua di paket Mulai","Everything in Starter"],pbb:["Dashboard pemilik (ID/EN)","Owner dashboard (ID/EN)"],pbc:["Pendampingan 1 bulan + perubahan kecil","1 month of support + small changes"],
+  pc:["Lengkap + pendampingan","Complete + retainer"],"pc$":["Semua modul","All modules"],pcf:["Untuk properti atau grup usaha yang mau pindah total dari spreadsheet, termasuk booking online dan pembayaran.","For a property or group moving fully off spreadsheets, including online booking and payments."],pca:["Semua modul + booking engine publik","All modules + public booking engine"],pcb:["Integrasi QRIS & WhatsApp","QRIS & WhatsApp integration"],pcc:["Retainer bulanan: pengembangan & support","Monthly retainer: development & support"],
+  pbtn:["Tanya penawaran","Ask for a quote"],
+  s6h:["Yang sering ditanyakan.","Frequently asked."],
+  f1q:["Usaha saya bukan villa. Masih relevan?","My business isn't a villa. Still relevant?"],f1a:["Ya. Modul tugas/SOP, absensi, purchasing, inventaris, dan keuangan dipakai lintas jenis usaha — restoran, kafe, studio, klinik kecil, kos-kosan. Yang spesifik properti hanya reservasi & housekeeping.","Yes. Tasks/SOP, attendance, purchasing, inventory and finance work across business types — restaurants, cafés, studios, small clinics, boarding houses. Only reservations & housekeeping are property-specific."],
+  f2q:["Datanya disimpan di mana?","Where is the data stored?"],f2a:["Di akun Notion (atau Google Sheets) milik Anda sendiri. Anda bisa membuka, mengekspor, dan membawanya kapan saja tanpa tergantung saya.","In your own Notion (or Google Sheets) account. You can open, export and take it any time without depending on me."],
+  f3q:["Staff saya tidak terbiasa aplikasi.","My staff aren't used to apps."],f3a:["Sistem ini memang dirancang untuk housekeeper dan staff bar yang memakai HP dengan tangan basah: tombol besar, satu layar satu tugas, foto dari kamera, tanpa istilah teknis. Pelatihan biasanya cukup 1 sesi.","It's designed for housekeepers and bar staff using a phone with wet hands: big buttons, one task per screen, camera photos, no jargon. One training session is usually enough."],
+  f4q:["Berapa biaya bulanannya?","What's the monthly cost?"],f4a:["Infrastruktur (Vercel + Notion) gratis untuk skala UMKM. Biaya yang ada adalah jasa setup per modul dan, kalau mau, retainer pendampingan bulanan. Tidak ada biaya per user.","Infrastructure (Vercel + Notion) is free at SME scale. What you pay is setup per module and, optionally, a monthly support retainer. No per-user fees."],
+  f5q:["Bisa terhubung ke Airbnb / Booking.com / POS?","Can it connect to Airbnb / Booking.com / a POS?"],f5a:["Reservasi dari OTA bisa dicatat dengan status khusus (Pending Agoda / Booking.com) dan masuk laporan. Integrasi otomatis penuh tergantung akses API masing-masing platform — kita bahas saat ngobrol.","OTA bookings can be recorded with their own status (Pending Agoda / Booking.com) and appear in reports. Full automatic integration depends on each platform's API access — we'll discuss it."],
+  f6q:["Kalau saya berhenti, sistemnya bagaimana?","What happens if I stop?"],f6a:["Tetap jalan. Kode ada di repositori GitHub Anda, data di Notion Anda. Saya serahkan dokumentasi dan akses penuh.","It keeps running. The code is in your GitHub repository, the data in your Notion. You get documentation and full access."],
+  kh:["Ceritakan operasional Anda. 30 menit, tanpa komitmen.","Tell me about your operations. 30 minutes, no commitment."],kp:["Paling enak lewat WhatsApp. Kirim jenis usaha, jumlah tim, dan satu hal yang paling bikin repot setiap hari — saya balas dengan usulan modul pertama.","WhatsApp is easiest. Send your business type, team size and the one thing that's most painful each day — I'll reply with a suggested first module."],
+  kd:["Coba dulu","Try first"],kd2:["Demo interaktif dengan data contoh","Interactive demo with sample data"],kp2:["Tentang saya","About me"],
+};
+let lang = localStorage.getItem("jasa-lang") || "id";
+function render(){
+  const i = lang==="en"?1:0;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t; if(!T[k]) return; if(el.dataset.html) el.innerHTML=T[k][i]; else el.textContent=T[k][i];});
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  document.getElementById("mods").innerHTML = MODS.map(m=>`<div class="mod"><span class="st">LIVE</span><b>${m[i]}</b><span>${m[2+i]}</span></div>`).join("");
+  document.title = i ? "Operations systems for small businesses · Faiz Iqbal" : "Jasa Sistem Operasional untuk UMKM · Faiz Iqbal";
+}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;localStorage.setItem("jasa-lang",lang);render();}));
+render();
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll(".reveal").forEach(el=>el.classList.add("in")),1500);
+</script>
+</body>
+</html>
